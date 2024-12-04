@@ -1,7 +1,6 @@
 package khu.cloudproject.uwatch.channel;
 
 import jakarta.persistence.*;
-import khu.cloudproject.uwatch.global.domain.BaseTimeEntity;
 import khu.cloudproject.uwatch.member.Member;
 import khu.cloudproject.uwatch.video.Video;
 import lombok.*;
@@ -17,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "channel")
-public class Channel extends BaseTimeEntity {
+public class Channel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

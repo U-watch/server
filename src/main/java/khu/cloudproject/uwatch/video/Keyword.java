@@ -1,7 +1,6 @@
 package khu.cloudproject.uwatch.video;
 
 import jakarta.persistence.*;
-import khu.cloudproject.uwatch.global.domain.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -12,7 +11,7 @@ import org.hibernate.annotations.DynamicInsert;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "keyword")
-public class Keyword extends BaseTimeEntity {
+public class Keyword {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

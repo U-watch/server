@@ -3,7 +3,6 @@ package khu.cloudproject.uwatch.live;
 import jakarta.persistence.*;
 import khu.cloudproject.uwatch.channel.Channel;
 import khu.cloudproject.uwatch.comment.LiveComment;
-import khu.cloudproject.uwatch.global.domain.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -16,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "live")
-public class Live extends BaseTimeEntity {
+public class Live {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

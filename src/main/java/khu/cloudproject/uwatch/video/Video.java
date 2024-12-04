@@ -3,7 +3,6 @@ package khu.cloudproject.uwatch.video;
 import jakarta.persistence.*;
 import khu.cloudproject.uwatch.channel.Channel;
 import khu.cloudproject.uwatch.comment.VideoComment;
-import khu.cloudproject.uwatch.global.domain.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -17,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "video")
-public class Video extends BaseTimeEntity {
+public class Video {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
