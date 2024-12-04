@@ -1,4 +1,4 @@
-package khu.cloudproject.uwatch.comment;
+package khu.cloudproject.uwatch.video;
 
 import jakarta.persistence.*;
 import khu.cloudproject.uwatch.global.domain.BaseTimeEntity;
@@ -11,10 +11,20 @@ import org.hibernate.annotations.DynamicInsert;
 @DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Comment extends BaseTimeEntity {
+@Table(name = "keyword")
+public class Keyword extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
     private Long id;
+
+    private String topkeyword1;
+    private String topkeyword2;
+    private String topkeyword3;
+
+    @ManyToOne
+    @JoinColumn(name = "video_id", nullable = false)
+    private Video video;
+
+    // Getters, Setters, Constructors
 }
