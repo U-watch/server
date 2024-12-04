@@ -21,6 +21,13 @@ public class Keyword {
     private String topkeyword2;
     private String topkeyword3;
 
+    @Column(name = "topkeyword1_count")
+    private Long topkeyword1Count;
+    @Column(name = "topkeyword2_count")
+    private Long topkeyword2Count;
+    @Column(name = "topkeyword3_count")
+    private Long topkeyword3Count;
+
     @ManyToOne
     @JoinColumn(name = "video_id", nullable = false)
     private Video video;

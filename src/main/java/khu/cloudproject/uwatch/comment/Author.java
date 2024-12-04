@@ -31,8 +31,5 @@ public class Author {
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<VideoComment> videoComments;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<LiveComment> liveComments;
-
     // Getters, Setters, Constructors
 }

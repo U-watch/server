@@ -20,15 +20,19 @@ public class LiveComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String authorId;
+
+    private String profileImageUrl;
+
     @Column(name = "comment_text", nullable = false)
     private String commentText;
-
-    @ManyToOne
-    @JoinColumn(name = "live_id", nullable = false)
-    private Live live;
 
     @Column(name = "published_at")
     private LocalDateTime publishedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "live_id", nullable = false)
+    private Live live;
+    
     // Getters, Setters, Constructors
 }
