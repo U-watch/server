@@ -3,6 +3,7 @@ package khu.cloudproject.uwatch.video;
 import jakarta.persistence.*;
 import khu.cloudproject.uwatch.channel.Channel;
 import khu.cloudproject.uwatch.comment.VideoComment;
+import khu.cloudproject.uwatch.global.enums.AnalyzingStatus;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 

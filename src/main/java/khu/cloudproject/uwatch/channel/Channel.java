@@ -1,6 +1,7 @@
 package khu.cloudproject.uwatch.channel;
 
 import jakarta.persistence.*;
+import khu.cloudproject.uwatch.live.Live;
 import khu.cloudproject.uwatch.member.Member;
 import khu.cloudproject.uwatch.video.Video;
 import lombok.*;
