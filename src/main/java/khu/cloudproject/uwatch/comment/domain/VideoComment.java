@@ -1,10 +1,10 @@
-package khu.cloudproject.uwatch.comment;
+package khu.cloudproject.uwatch.comment.domain;
 
 import jakarta.persistence.*;
 import khu.cloudproject.uwatch.global.enums.BlockedStatus;
 import khu.cloudproject.uwatch.global.enums.CommentCategory;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
-import khu.cloudproject.uwatch.video.Video;
+import khu.cloudproject.uwatch.video.domain.Video;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 

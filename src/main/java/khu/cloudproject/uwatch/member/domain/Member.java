@@ -1,8 +1,7 @@
-package khu.cloudproject.uwatch.member;
+package khu.cloudproject.uwatch.member.domain;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
-import khu.cloudproject.uwatch.channel.Channel;
+import khu.cloudproject.uwatch.channel.domain.Channel;
 import khu.cloudproject.uwatch.global.domain.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

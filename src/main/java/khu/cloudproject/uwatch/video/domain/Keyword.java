@@ -1,4 +1,4 @@
-package khu.cloudproject.uwatch.video;
+package khu.cloudproject.uwatch.video.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

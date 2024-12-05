@@ -1,8 +1,8 @@
-package khu.cloudproject.uwatch.live;
+package khu.cloudproject.uwatch.live.domain;
 
 import jakarta.persistence.*;
-import khu.cloudproject.uwatch.channel.Channel;
-import khu.cloudproject.uwatch.comment.LiveComment;
+import khu.cloudproject.uwatch.channel.domain.Channel;
+import khu.cloudproject.uwatch.comment.domain.LiveComment;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 

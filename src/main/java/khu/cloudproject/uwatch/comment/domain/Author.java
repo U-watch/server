@@ -1,4 +1,4 @@
-package khu.cloudproject.uwatch.comment;
+package khu.cloudproject.uwatch.comment.domain;
 
 import jakarta.persistence.*;
 import lombok.*;

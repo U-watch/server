@@ -1,7 +1,7 @@
-package khu.cloudproject.uwatch.comment;
+package khu.cloudproject.uwatch.comment.domain;
 
 import jakarta.persistence.*;
-import khu.cloudproject.uwatch.live.Live;
+import khu.cloudproject.uwatch.live.domain.Live;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -33,6 +33,6 @@ public class LiveComment {
     @ManyToOne
     @JoinColumn(name = "live_id", nullable = false)
     private Live live;
-    
+
     // Getters, Setters, Constructors
 }
