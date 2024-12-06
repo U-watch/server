@@ -1,4 +1,7 @@
 package khu.cloudproject.uwatch.comment.domain.repository;
 
-public interface LiveCommentRepository {
+import khu.cloudproject.uwatch.comment.domain.LiveComment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LiveCommentRepository extends JpaRepository<LiveComment, Long> {
 }

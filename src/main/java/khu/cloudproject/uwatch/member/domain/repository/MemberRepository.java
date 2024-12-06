@@ -1,4 +1,7 @@
 package khu.cloudproject.uwatch.member.domain.repository;
 
-public interface MemberRepository {
+import khu.cloudproject.uwatch.member.domain.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MemberRepository extends JpaRepository<Member, Long> {
 }

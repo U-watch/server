@@ -1,4 +1,7 @@
 package khu.cloudproject.uwatch.comment.domain.repository;
 
-public interface VideoCommentRepository {
+import khu.cloudproject.uwatch.comment.domain.VideoComment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface VideoCommentRepository extends JpaRepository<VideoComment, Long> {
 }

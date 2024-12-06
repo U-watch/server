@@ -1,4 +1,7 @@
 package khu.cloudproject.uwatch.comment.domain.repository;
 
-public interface AuthorRepository {
+import khu.cloudproject.uwatch.comment.domain.Author;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AuthorRepository extends JpaRepository<Author, Long> {
 }
