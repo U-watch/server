@@ -29,7 +29,7 @@ public class Keyword {
     private Long topkeyword3Count;
 
     @ManyToOne
-    @JoinColumn(name = "video_id", nullable = false)
+    @JoinColumn(name = "video_id")
     private Video video;
 
     // Getters, Setters, Constructors

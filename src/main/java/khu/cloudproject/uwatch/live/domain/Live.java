@@ -21,7 +21,7 @@ public class Live {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "live_id", nullable = false, unique = true)
+    @Column(name = "live_id")
     private String liveId;
 
     private String title;
@@ -49,7 +49,7 @@ public class Live {
     private Integer slander;
 
     @ManyToOne
-    @JoinColumn(name = "channel_id", nullable = false)
+    @JoinColumn(name = "channel_id")
     private Channel channel;
 
     @OneToMany(mappedBy = "live", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

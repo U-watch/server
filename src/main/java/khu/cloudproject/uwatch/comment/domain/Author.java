@@ -19,7 +19,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "author_id", nullable = false, unique = true)
+    @Column(name = "author_id")
     private String authorId;
 
     @Column(name = "profile_image_url")

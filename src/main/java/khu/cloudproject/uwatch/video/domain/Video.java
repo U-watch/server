@@ -23,7 +23,7 @@ public class Video {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "video_id", nullable = false, unique = true)
+    @Column(name = "video_id")
     private String videoId;
 
     private String title;
@@ -58,7 +58,7 @@ public class Video {
     private String commentDownloadUrl;
 
     @ManyToOne
-    @JoinColumn(name = "channel_id", nullable = false)
+    @JoinColumn(name = "channel_id")
     private Channel channel;
 
     @OneToMany(mappedBy = "video", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

@@ -23,7 +23,7 @@ public class VideoComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "comment_text", nullable = false)
+    @Column(name = "comment_text")
     private String commentText;
 
     @Column(name = "like_count")
@@ -52,11 +52,11 @@ public class VideoComment {
     private BlockedStatus blockedStatus;
 
     @ManyToOne
-    @JoinColumn(name = "video_id", nullable = false)
+    @JoinColumn(name = "video_id")
     private Video video;
 
     @ManyToOne
-    @JoinColumn(name = "author_id", nullable = false)
+    @JoinColumn(name = "author_id")
     private Author author;
 
     // Getters, Setters, Constructors

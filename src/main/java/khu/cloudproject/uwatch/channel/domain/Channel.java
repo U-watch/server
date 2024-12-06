@@ -23,12 +23,12 @@ public class Channel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "channel_id", nullable = false, unique = true)
+    @Column(name = "channel_id", unique = true)
     private String channelId;
 
     private String thumbnail;
 
-    @Column(name = "channel_name", nullable = false)
+    @Column(name = "channel_name")
     private String channelName;
 
     private String description;
@@ -54,7 +54,7 @@ public class Channel {
     private String country;
 
     @OneToOne
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "member_id")
     private Member member;
 
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

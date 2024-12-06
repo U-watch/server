@@ -24,14 +24,14 @@ public class LiveComment {
 
     private String profileImageUrl;
 
-    @Column(name = "comment_text", nullable = false)
+    @Column(name = "comment_text")
     private String commentText;
 
     @Column(name = "published_at")
     private LocalDateTime publishedAt;
 
     @ManyToOne
-    @JoinColumn(name = "live_id", nullable = false)
+    @JoinColumn(name = "live_id")
     private Live live;
 
     // Getters, Setters, Constructors
