@@ -18,9 +18,6 @@ import java.util.List;
 public class Live {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(name = "live_id")
     private String liveId;
 

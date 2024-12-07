@@ -20,10 +20,7 @@ import java.util.List;
 public class Channel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "channel_id", unique = true)
+    @Column(name = "channel_id")
     private String channelId;
 
     private String thumbnail;
