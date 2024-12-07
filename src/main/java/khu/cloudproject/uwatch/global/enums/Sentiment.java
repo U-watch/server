@@ -1,7 +1,10 @@
 package khu.cloudproject.uwatch.global.enums;
 
 public enum Sentiment {
-    POSITIVE,  // 긍정
-    NEGATIVE,  // 부정
-    NEUTRAL    // 중립
+    JOY,        // 기쁨
+    ANGER,      // 분노
+    SADNESS,    // 슬픔
+    SURPRISE,   // 놀람
+    FEAR,       // 두려움
+    DISGUST     // 혐오
 }
