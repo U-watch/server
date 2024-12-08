@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import khu.cloudproject.uwatch.global.enums.BlockedStatus;
 import khu.cloudproject.uwatch.global.enums.CommentCategory;
 import khu.cloudproject.uwatch.global.enums.PositiveStatus;
+import khu.cloudproject.uwatch.global.enums.Sentiment;
 import khu.cloudproject.uwatch.video.domain.Video;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
@@ -22,6 +23,12 @@ public class VideoComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "author_name")
+    private String authorName;
+
+    @Column(name = "author_profile_image_url")
+    private String authorProfileImageUrl;
 
     @Column(name = "comment_text")
     private String commentText;
@@ -46,6 +53,9 @@ public class VideoComment {
 
     @Column(name = "category_rate")
     private Integer categoryRate;
+
+    @Enumerated(EnumType.STRING)
+    private Sentiment sentiment;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "blocked_status")
