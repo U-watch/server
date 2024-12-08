@@ -25,7 +25,7 @@ public class VideoApi {
     private final VideoService videoService;
 
     @GetMapping("/analysis/sentiment")
-    @Operation(summary = "비디오 댓글 감정 분석 수치 조회 API", description = "전체 댓글 수 대비 특정 감정의 댓글 비율을 반환합니다.")
+    @Operation(summary = "비디오 댓글 감정 분석 수치 조회 API", description = "| Request: video_id | 기준으로 전체 댓글 수 대비 특정 감정의 댓글 비율을 반환합니다. |")
     public ResponseEntity<ApiResponse<VideoResponseDTO.SentimentAnalysisResponse>> getSentimentAnalysis(@RequestParam String videoId) {
         VideoResponseDTO.SentimentAnalysisResponse response = videoService.getSentimentAnalysis(videoId);
         return ResponseEntity.ok(ApiResponse.of(response));
@@ -40,7 +40,7 @@ public class VideoApi {
     }
 
     @GetMapping("/top-videos")
-    @Operation(summary = "채널 상위 비디오 조회", description = "조회수를 기준으로 상위 20개의 비디오를 조회합니다.")
+    @Operation(summary = "채널 상위 비디오 조회", description = "조회수를 기준으로 상위 20개의 비디오를 조회합니다. \n\n [channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
     public ResponseEntity<ApiResponse<List<VideoResponseDTO.VideoSummaryResponse>>> getTopVideosByViewCount(
             @RequestParam String channelId) {
         List<VideoResponseDTO.VideoSummaryResponse> response = videoService.getTopVideosByViewCount(channelId);
