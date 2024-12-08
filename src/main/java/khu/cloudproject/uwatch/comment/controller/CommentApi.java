@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +29,16 @@ public class CommentApi {
             @RequestParam String channelId,
             @RequestParam String authorName) {
         List<CommentResponseDTO.VideoCommentResponseDTO> response = videoCommentService.getCommentsByAuthor(channelId, authorName);
+        return ResponseEntity.ok(ApiResponse.of(response));
+    }
+
+    @GetMapping("/{videoId}/comments/details")
+    @Operation(summary = "특정 키워드 포함 댓글 리스트 상세 조회",
+            description = "| Request: video_id, keyword | 특정 비디오에서 키워드를 포함한 댓글의 상세 리스트를 제공합니다. |")
+    public ResponseEntity<ApiResponse<List<CommentResponseDTO.VideoCommentDetailResponseDTO>>> getDetailedCommentsByKeyword(
+            @PathVariable String videoId,
+            @RequestParam String keyword) {
+        List<CommentResponseDTO.VideoCommentDetailResponseDTO> response = videoCommentService.getDetailedCommentsByKeyword(videoId, keyword);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 }

@@ -44,4 +44,12 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
              ORDER BY vc.publishedAt DESC
             """)
     List<VideoComment> findByChannelIdAndAuthorName(@Param("channelId") String channelId, @Param("authorName") String authorName);
+
+    @Query("""
+            SELECT vc
+            FROM VideoComment vc
+            WHERE vc.video.videoId = :videoId
+            AND vc.commentText LIKE %:keyword%
+            """)
+    List<VideoComment> findDetailedCommentsByVideoIdAndKeyword(@Param("videoId") String videoId, @Param("keyword") String keyword);
 }

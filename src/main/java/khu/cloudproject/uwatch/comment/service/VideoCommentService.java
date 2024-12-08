@@ -28,4 +28,18 @@ public class VideoCommentService {
                         .build())
                 .collect(Collectors.toList());
     }
+
+    public List<CommentResponseDTO.VideoCommentDetailResponseDTO> getDetailedCommentsByKeyword(String videoId, String keyword) {
+        List<VideoComment> comments = videoCommentRepository.findDetailedCommentsByVideoIdAndKeyword(videoId, keyword);
+
+        return comments.stream()
+                .map(comment -> CommentResponseDTO.VideoCommentDetailResponseDTO.builder()
+                        .authorName(comment.getAuthorName())
+                        .authorProfileImage(comment.getAuthorProfileImageUrl())
+                        .commentText(comment.getCommentText())
+                        .publishedAt(comment.getPublishedAt())
+                        .likeCount(comment.getLikeCount())
+                        .build())
+                .toList();
+    }
 }
