@@ -62,4 +62,12 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
 
     @Query("SELECT vc FROM VideoComment vc WHERE vc.video.videoId = :videoId")
     List<VideoComment> findByVideoId(@Param("videoId") String videoId);
+
+    @Query("""
+            SELECT vc
+            FROM VideoComment vc
+            WHERE vc.video.videoId = :videoId
+            AND vc.sentiment = :sentiment
+            """)
+    List<VideoComment> findByVideoIdAndSentiment(@Param("videoId") String videoId, @Param("sentiment") Sentiment sentiment);
 }
