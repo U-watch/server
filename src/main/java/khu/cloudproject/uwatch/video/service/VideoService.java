@@ -3,6 +3,8 @@ package khu.cloudproject.uwatch.video.service;
 import khu.cloudproject.uwatch.comment.domain.repository.VideoCommentRepository;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
 import khu.cloudproject.uwatch.video.controller.dto.VideoResponseDTO;
+import khu.cloudproject.uwatch.video.domain.Video;
+import khu.cloudproject.uwatch.video.domain.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 public class VideoService {
 
     private final VideoCommentRepository videoCommentRepository;
+    private final VideoRepository videoRepository;
 
     public VideoResponseDTO.SentimentAnalysisResponse getSentimentAnalysis(String videoId) {
         long totalComments = videoCommentRepository.countByVideoId(videoId);
@@ -38,6 +41,24 @@ public class VideoService {
 
     private double calculatePercentage(long count, long total) {
         return Math.round(((double) count / total) * 10000.0) / 100.0;
+    }
+
+    public List<VideoResponseDTO.VideoSummaryResponse> getVideosByChannelId(String channelId) {
+        List<Video> videos = videoRepository.findByChannelId(channelId);
+
+        // DTO로 변환
+        return videos.stream()
+                .map(video -> VideoResponseDTO.VideoSummaryResponse.builder()
+                        .videoId(video.getVideoId())
+                        .title(video.getTitle())
+                        .thumbnail(video.getThumbnail())
+                        .viewCount(video.getViewCount())
+                        .likeCount(video.getLikeCount())
+                        .commentCount(video.getCommentCount())
+                        .publishedAt(video.getPublishedAt())
+                        .analyzingStatus(video.getAnalyzingStatus())
+                        .build())
+                .collect(Collectors.toList());
     }
 
 }

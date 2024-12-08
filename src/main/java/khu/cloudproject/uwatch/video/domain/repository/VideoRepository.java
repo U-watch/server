@@ -13,5 +13,13 @@ public interface VideoRepository extends JpaRepository<Video, String> {
 
     @Query("SELECT v.videoId FROM Video v WHERE v.channel.channelId = :channelId")
     List<String> findVideoIdsByChannelId(@Param("channelId") String channelId);
+
+    @Query("""
+             SELECT v
+             FROM Video v
+             WHERE v.channel.channelId = :channelId
+             ORDER BY v.publishedAt DESC
+            """)
+    List<Video> findByChannelId(@Param("channelId") String channelId);
 }
 
