@@ -24,10 +24,15 @@ public class Member extends BaseTimeEntity {
 
     private String name;
 
+    private String role;
+
     private String email;
 
     @Column(name = "profile_image_url")
     private String profileImageUrl;
+
+    @Column(name = "channel_title")
+    private String channelTitle;
 
     @Column(name = "access_token")
     private String accessToken;
