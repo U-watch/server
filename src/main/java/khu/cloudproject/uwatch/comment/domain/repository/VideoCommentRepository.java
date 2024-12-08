@@ -1,6 +1,7 @@
 package khu.cloudproject.uwatch.comment.domain.repository;
 
 import khu.cloudproject.uwatch.comment.domain.VideoComment;
+import khu.cloudproject.uwatch.global.enums.PositiveStatus;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -52,4 +53,10 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
             AND vc.commentText LIKE %:keyword%
             """)
     List<VideoComment> findDetailedCommentsByVideoIdAndKeyword(@Param("videoId") String videoId, @Param("keyword") String keyword);
+
+    @Query("SELECT COUNT(vc) FROM VideoComment vc WHERE vc.video.videoId = :videoId AND vc.positiveStatus = :status")
+    long countByVideoIdAndPositiveStatus(@Param("videoId") String videoId, @Param("status") PositiveStatus status);
+
+    @Query("SELECT vc.category, COUNT(vc) FROM VideoComment vc WHERE vc.video.videoId = :videoId GROUP BY vc.category")
+    List<Object[]> countCategoriesByVideoId(@Param("videoId") String videoId);
 }

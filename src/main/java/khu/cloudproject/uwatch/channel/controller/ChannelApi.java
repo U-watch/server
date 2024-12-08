@@ -25,21 +25,21 @@ public class ChannelApi {
     private final ChannelService channelService;
 
     @GetMapping("/info")
-    @Operation(summary = "온보딩 페이지용 채널 간단 조회 API", description = "[channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
+    @Operation(summary = "온보딩 페이지용 채널 간단 조회", description = "[channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
     public ResponseEntity<ApiResponse<ChannelResponseDTO.ChannelProfileResponse>> getChannelInfo(@RequestParam String channelId) {
         ChannelResponseDTO.ChannelProfileResponse response = channelService.getChannelInfo(channelId);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 
     @GetMapping("/details")
-    @Operation(summary = "채널 상세 정보 조회 API", description = "[channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
+    @Operation(summary = "채널 상세 정보 조회", description = "[channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
     public ResponseEntity<ApiResponse<ChannelResponseDTO.ChannelDetailsResponse>> getChannelDetails(@RequestParam String channelId) {
         ChannelResponseDTO.ChannelDetailsResponse response = channelService.getChannelDetails(channelId);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 
     @GetMapping("/analysis/sentiment")
-    @Operation(summary = "채널 감정 분석 조회 API", description = "[channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
+    @Operation(summary = "채널 감정 분석 조회", description = "[channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
     public ResponseEntity<ApiResponse<ChannelResponseDTO.ChannelSentimentAnalysisResponse>> getChannelSentimentAnalysis(
             @RequestParam String channelId) {
         ChannelResponseDTO.ChannelSentimentAnalysisResponse response = channelService.getChannelSentimentAnalysis(channelId);

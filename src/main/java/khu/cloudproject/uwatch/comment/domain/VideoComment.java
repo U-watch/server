@@ -51,9 +51,6 @@ public class VideoComment {
     @Enumerated(EnumType.STRING)
     private CommentCategory category;
 
-    @Column(name = "category_rate")
-    private Integer categoryRate;
-
     @Enumerated(EnumType.STRING)
     private Sentiment sentiment;
 

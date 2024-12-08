@@ -1,15 +1,18 @@
 package khu.cloudproject.uwatch.video.service;
 
 import khu.cloudproject.uwatch.comment.domain.repository.VideoCommentRepository;
+import khu.cloudproject.uwatch.global.enums.PositiveStatus;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
 import khu.cloudproject.uwatch.global.exception.CommonErrorCode;
 import khu.cloudproject.uwatch.global.exception.CustomException;
+import khu.cloudproject.uwatch.video.controller.dto.VideoAnalysisResponseDTO;
 import khu.cloudproject.uwatch.video.controller.dto.VideoResponseDTO;
 import khu.cloudproject.uwatch.video.domain.Video;
 import khu.cloudproject.uwatch.video.domain.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -94,6 +97,46 @@ public class VideoService {
                 .lastUpdated(video.getLastUpdated())
                 .wordCloudUrl(video.getWordcloud())
                 .build();
+    }
+
+    public VideoAnalysisResponseDTO getVideoAnalysis(String videoId) {
+        long totalComments = videoCommentRepository.countByVideoId(videoId);
+
+        if (totalComments == 0) {
+            return VideoAnalysisResponseDTO.builder()
+                    .positiveRate(0.0)
+                    .sentimentDistribution(new HashMap<>())
+                    .categoryDistribution(new HashMap<>())
+                    .build();
+        }
+
+        // Positive Rate
+        long positiveCount = videoCommentRepository.countByVideoIdAndPositiveStatus(videoId, PositiveStatus.POSITIVE);
+        double positiveRate = (double) positiveCount / totalComments * 100;
+
+        // Sentiment Distribution
+        Map<String, Double> sentimentDistribution = calculateDistribution(
+                videoCommentRepository.countSentimentsByVideoId(videoId), totalComments);
+
+        // Category Distribution
+        Map<String, Double> categoryDistribution = calculateDistribution(
+                videoCommentRepository.countCategoriesByVideoId(videoId), totalComments);
+
+        return VideoAnalysisResponseDTO.builder()
+                .positiveRate(positiveRate)
+                .sentimentDistribution(sentimentDistribution)
+                .categoryDistribution(categoryDistribution)
+                .build();
+    }
+
+    private Map<String, Double> calculateDistribution(List<Object[]> counts, long total) {
+        Map<String, Double> distribution = new HashMap<>();
+        for (Object[] count : counts) {
+            String key = count[0].toString();
+            long value = (long) count[1];
+            distribution.put(key, (double) value / total * 100);
+        }
+        return distribution;
     }
 }
 

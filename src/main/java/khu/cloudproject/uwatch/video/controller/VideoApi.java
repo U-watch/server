@@ -4,16 +4,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import khu.cloudproject.uwatch.global.response.ApiResponse;
 import khu.cloudproject.uwatch.video.controller.dto.KeywordResponseDTO;
+import khu.cloudproject.uwatch.video.controller.dto.VideoAnalysisResponseDTO;
 import khu.cloudproject.uwatch.video.controller.dto.VideoResponseDTO;
 import khu.cloudproject.uwatch.video.service.KeywordService;
 import khu.cloudproject.uwatch.video.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -66,6 +64,14 @@ public class VideoApi {
     @Operation(summary = "가장 많이 언급된 키워드 조회", description = "특정 비디오에서 가장 많이 언급된 키워드를 조회합니다.")
     public ResponseEntity<ApiResponse<KeywordResponseDTO>> getTopKeywords(@RequestParam String videoId) {
         KeywordResponseDTO response = keywordService.getTopKeywords(videoId);
+        return ResponseEntity.ok(ApiResponse.of(response));
+    }
+
+    @GetMapping("/{videoId}/analysis")
+    @Operation(summary = "비디오 댓글 AI 분석 및 비율 분포도 조회(긍정 비율, 감정 분포, 카테고리 분포)",
+            description = "특정 비디오 댓글의 긍정 비율, 감정 분포, 카테고리 분포를 반환합니다.")
+    public ResponseEntity<ApiResponse<VideoAnalysisResponseDTO>> getVideoAnalysis(@PathVariable String videoId) {
+        VideoAnalysisResponseDTO response = videoService.getVideoAnalysis(videoId);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 }

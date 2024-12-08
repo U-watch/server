@@ -23,7 +23,7 @@ public class CommentResponseDTO {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public class VideoCommentDetailResponseDTO {
+    public static class VideoCommentDetailResponseDTO {
         private String authorName;          // 작성자 이름
         private String authorProfileImage;  // 작성자 프로필 이미지 URL
         private String commentText;         // 댓글 내용
