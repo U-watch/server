@@ -46,4 +46,18 @@ public class VideoApi {
         List<VideoResponseDTO.VideoSummaryResponse> response = videoService.getTopVideosByViewCount(channelId);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
+
+    @GetMapping("/info")
+    @Operation(summary = "비디오 세부 정보 조회", description = "특정 비디오의 세부 정보(총댓글, 전체 조회수, 워드클라우드 url 등)를 조회합니다.")
+    public ResponseEntity<ApiResponse<VideoResponseDTO.VideoDetailsResponse>> getVideoDetails(
+            @RequestParam String videoId) {
+        VideoResponseDTO.VideoDetailsResponse response = videoService.getVideoDetails(videoId);
+        return ResponseEntity.ok(ApiResponse.of(response));
+    }
+
+    /*
+        TODO: 댓글 추이 그래프를 생성할 때 어떤 값이 필요한지 프론트와 상의 후 댓글 추이 API 구현
+     */
+
+    
 }

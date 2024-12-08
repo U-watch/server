@@ -54,6 +54,12 @@ public class Video {
     @Column(name = "comment_download_url")
     private String commentDownloadUrl;
 
+    @Column(name = "wordcloud")
+    private String wordcloud;
+
+    @Column(name = "last_updated")
+    private LocalDateTime lastUpdated;
+
     @ManyToOne
     @JoinColumn(name = "channel_id")
     private Channel channel;

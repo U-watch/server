@@ -21,8 +21,9 @@ public enum CommonErrorCode implements BaseErrorCode {
     // 페이징 관련 에러
     PAGE_NEGATIVE_INPUT(HttpStatus.BAD_REQUEST, "PAGE4001", "페이지 번호는 1이상의 숫자여야 합니다."),
 
-    // Channel
-    CHANNEL_NOT_FOUND(HttpStatus.NOT_FOUND, "CHANNEL404", "해당 채널을 찾을 수 없습니다.");
+    // NOT FOUND
+    CHANNEL_NOT_FOUND(HttpStatus.NOT_FOUND, "CHANNEL404", "해당 채널을 찾을 수 없습니다."),
+    VIDEO_NOT_FOUND(HttpStatus.NOT_FOUND, "VIDEO404", "해당 비디오를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

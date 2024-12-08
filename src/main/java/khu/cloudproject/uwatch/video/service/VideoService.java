@@ -2,6 +2,8 @@ package khu.cloudproject.uwatch.video.service;
 
 import khu.cloudproject.uwatch.comment.domain.repository.VideoCommentRepository;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
+import khu.cloudproject.uwatch.global.exception.CommonErrorCode;
+import khu.cloudproject.uwatch.global.exception.CustomException;
 import khu.cloudproject.uwatch.video.controller.dto.VideoResponseDTO;
 import khu.cloudproject.uwatch.video.domain.Video;
 import khu.cloudproject.uwatch.video.domain.repository.VideoRepository;
@@ -79,5 +81,19 @@ public class VideoService {
                 .collect(Collectors.toList());
     }
 
+    public VideoResponseDTO.VideoDetailsResponse getVideoDetails(String videoId) {
+        Video video = videoRepository.findById(videoId)
+                .orElseThrow(() -> new CustomException(CommonErrorCode.VIDEO_NOT_FOUND));
+
+        return VideoResponseDTO.VideoDetailsResponse.builder()
+                .videoId(video.getVideoId())
+                .title(video.getTitle())
+                .thumbnail(video.getThumbnail())
+                .viewCount(video.getViewCount())
+                .commentCount(video.getCommentCount())
+                .lastUpdated(video.getLastUpdated())
+                .wordCloudUrl(video.getWordcloud())
+                .build();
+    }
 }
 

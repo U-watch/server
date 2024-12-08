@@ -37,4 +37,18 @@ public class VideoResponseDTO {
         private LocalDateTime publishedAt;          // 게시 날짜
         private AnalyzingStatus analyzingStatus;    // 비디오 분석 여부
     }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class VideoDetailsResponse {
+        private String videoId;       // 비디오 ID
+        private String title;         // 비디오 제목
+        private String thumbnail;     // 썸네일 URL
+        private Long viewCount;       // 조회수
+        private Integer commentCount; // 댓글 수
+        private LocalDateTime lastUpdated; // 마지막 업데이트 시간
+        private String wordCloudUrl;  // 워드클라우드 URL
+    }
 }
