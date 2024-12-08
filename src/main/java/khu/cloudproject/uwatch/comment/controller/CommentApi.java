@@ -74,4 +74,6 @@ public class CommentApi {
         List<CommentResponseDTO.VideoCommentDetailResponseDTO> comments = videoCommentService.getCommentsByCategory(videoId, category);
         return ResponseEntity.ok(ApiResponse.of(comments));
     }
+
+    //TODO: 댓글 차단기능 -> 차단된 댓글은 조회되지 않도록 처리
 }
