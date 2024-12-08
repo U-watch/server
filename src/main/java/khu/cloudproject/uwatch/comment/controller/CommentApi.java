@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import khu.cloudproject.uwatch.comment.controller.dto.CommentResponseDTO;
 import khu.cloudproject.uwatch.comment.service.VideoCommentService;
+import khu.cloudproject.uwatch.global.enums.CommentCategory;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
 import khu.cloudproject.uwatch.global.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +63,15 @@ public class CommentApi {
             @PathVariable String videoId,
             @PathVariable Sentiment sentiment) {
         List<CommentResponseDTO.VideoCommentDetailResponseDTO> comments = videoCommentService.getCommentsBySentiment(videoId, sentiment);
+        return ResponseEntity.ok(ApiResponse.of(comments));
+    }
+
+    @GetMapping("/{videoId}/detail?category={category}")
+    @Operation(summary = "특정 카테고리에 해당하는 댓글 조회", description = "비디오 ID와 카테고리를 기준으로 댓글을 필터링합니다.")
+    public ResponseEntity<ApiResponse<List<CommentResponseDTO.VideoCommentDetailResponseDTO>>> getCommentsByCategory(
+            @PathVariable String videoId,
+            @PathVariable CommentCategory category) {
+        List<CommentResponseDTO.VideoCommentDetailResponseDTO> comments = videoCommentService.getCommentsByCategory(videoId, category);
         return ResponseEntity.ok(ApiResponse.of(comments));
     }
 }

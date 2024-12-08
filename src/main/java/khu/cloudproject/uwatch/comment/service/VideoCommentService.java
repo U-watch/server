@@ -3,6 +3,7 @@ package khu.cloudproject.uwatch.comment.service;
 import khu.cloudproject.uwatch.comment.controller.dto.CommentResponseDTO;
 import khu.cloudproject.uwatch.comment.domain.VideoComment;
 import khu.cloudproject.uwatch.comment.domain.repository.VideoCommentRepository;
+import khu.cloudproject.uwatch.global.enums.CommentCategory;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -60,6 +61,21 @@ public class VideoCommentService {
 
     public List<CommentResponseDTO.VideoCommentDetailResponseDTO> getCommentsBySentiment(String videoId, Sentiment sentiment) {
         List<VideoComment> comments = videoCommentRepository.findByVideoIdAndSentiment(videoId, sentiment);
+
+        // Map Entity to DTO
+        return comments.stream()
+                .map(comment -> CommentResponseDTO.VideoCommentDetailResponseDTO.builder()
+                        .authorName(comment.getAuthorName())
+                        .authorProfileImage(comment.getAuthorProfileImageUrl())
+                        .commentText(comment.getCommentText())
+                        .publishedAt(comment.getPublishedAt())
+                        .likeCount(comment.getLikeCount())
+                        .build())
+                .toList();
+    }
+
+    public List<CommentResponseDTO.VideoCommentDetailResponseDTO> getCommentsByCategory(String videoId, CommentCategory category) {
+        List<VideoComment> comments = videoCommentRepository.findByVideoIdAndCategory(videoId, category);
 
         // Map Entity to DTO
         return comments.stream()
