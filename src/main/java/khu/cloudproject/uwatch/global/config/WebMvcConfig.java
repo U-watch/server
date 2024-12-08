@@ -16,7 +16,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOriginPatterns("*")
 //                .allowedOrigins(getAllowOrigins())
-                .allowedHeaders("Authorization", "Cache-Control", "Content-Type", "ngrok-skip-browser-warning")
+                .allowedHeaders("Authorization", "Cache-Control", "Content-Type", "ngrok-skip-browser-warning") // ngrok-skip-browser-warning 추가
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                 .allowCredentials(true)
                 .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials") // 응답 헤더 노출
