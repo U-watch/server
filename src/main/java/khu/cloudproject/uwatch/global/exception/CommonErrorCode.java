@@ -23,7 +23,8 @@ public enum CommonErrorCode implements BaseErrorCode {
 
     // NOT FOUND
     CHANNEL_NOT_FOUND(HttpStatus.NOT_FOUND, "CHANNEL404", "해당 채널을 찾을 수 없습니다."),
-    VIDEO_NOT_FOUND(HttpStatus.NOT_FOUND, "VIDEO404", "해당 비디오를 찾을 수 없습니다.");
+    VIDEO_NOT_FOUND(HttpStatus.NOT_FOUND, "VIDEO404", "해당 비디오를 찾을 수 없습니다."),
+    KEYWORD_NOT_FOUND(HttpStatus.NOT_FOUND, "KEYWORD404", "해당 키워드를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

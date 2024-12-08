@@ -3,7 +3,9 @@ package khu.cloudproject.uwatch.video.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import khu.cloudproject.uwatch.global.response.ApiResponse;
+import khu.cloudproject.uwatch.video.controller.dto.KeywordResponseDTO;
 import khu.cloudproject.uwatch.video.controller.dto.VideoResponseDTO;
+import khu.cloudproject.uwatch.video.service.KeywordService;
 import khu.cloudproject.uwatch.video.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +25,10 @@ import java.util.List;
 public class VideoApi {
 
     private final VideoService videoService;
+    private final KeywordService keywordService;
 
     @GetMapping("/analysis/sentiment")
-    @Operation(summary = "비디오 댓글 감정 분석 수치 조회 API", description = "| Request: video_id | 기준으로 전체 댓글 수 대비 특정 감정의 댓글 비율을 반환합니다. |")
+    @Operation(summary = "비디오 댓글 감정 분석 수치 조회", description = "| Request: video_id | 기준으로 전체 댓글 수 대비 특정 감정의 댓글 비율을 반환합니다. |")
     public ResponseEntity<ApiResponse<VideoResponseDTO.SentimentAnalysisResponse>> getSentimentAnalysis(@RequestParam String videoId) {
         VideoResponseDTO.SentimentAnalysisResponse response = videoService.getSentimentAnalysis(videoId);
         return ResponseEntity.ok(ApiResponse.of(response));
@@ -59,5 +62,10 @@ public class VideoApi {
         TODO: 댓글 추이 그래프를 생성할 때 어떤 값이 필요한지 프론트와 상의 후 댓글 추이 API 구현
      */
 
-    
+    @GetMapping("/keywords")
+    @Operation(summary = "가장 많이 언급된 키워드 조회", description = "특정 비디오에서 가장 많이 언급된 키워드를 조회합니다.")
+    public ResponseEntity<ApiResponse<KeywordResponseDTO>> getTopKeywords(@RequestParam String videoId) {
+        KeywordResponseDTO response = keywordService.getTopKeywords(videoId);
+        return ResponseEntity.ok(ApiResponse.of(response));
+    }
 }
