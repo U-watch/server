@@ -32,10 +32,18 @@ public class VideoApi {
     }
 
     @GetMapping("/videos")
-    @Operation(summary = "채널 비디오 조회", description = "특정 채널의 비디오 목록을 조회합니다. \n\n [channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
+    @Operation(summary = "채널 비디오 목록 조회", description = "특정 채널의 비디오 목록을 조회합니다. \n\n [channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
     public ResponseEntity<ApiResponse<List<VideoResponseDTO.VideoSummaryResponse>>> getVideosByChannelId(
             @RequestParam String channelId) {
         List<VideoResponseDTO.VideoSummaryResponse> response = videoService.getVideosByChannelId(channelId);
+        return ResponseEntity.ok(ApiResponse.of(response));
+    }
+
+    @GetMapping("/top-videos")
+    @Operation(summary = "채널 상위 비디오 조회", description = "조회수를 기준으로 상위 20개의 비디오를 조회합니다.")
+    public ResponseEntity<ApiResponse<List<VideoResponseDTO.VideoSummaryResponse>>> getTopVideosByViewCount(
+            @RequestParam String channelId) {
+        List<VideoResponseDTO.VideoSummaryResponse> response = videoService.getTopVideosByViewCount(channelId);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 }

@@ -61,5 +61,23 @@ public class VideoService {
                 .collect(Collectors.toList());
     }
 
+    public List<VideoResponseDTO.VideoSummaryResponse> getTopVideosByViewCount(String channelId) {
+        List<Video> videos = videoRepository.findTop20ByChannelIdOrderByViewCountDesc(channelId);
+
+        // DTO로 변환
+        return videos.stream()
+                .map(video -> VideoResponseDTO.VideoSummaryResponse.builder()
+                        .videoId(video.getVideoId())
+                        .title(video.getTitle())
+                        .thumbnail(video.getThumbnail())
+                        .viewCount(video.getViewCount())
+                        .likeCount(video.getLikeCount())
+                        .commentCount(video.getCommentCount())
+                        .publishedAt(video.getPublishedAt())
+                        .analyzingStatus(video.getAnalyzingStatus())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
 }
 

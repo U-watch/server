@@ -21,5 +21,13 @@ public interface VideoRepository extends JpaRepository<Video, String> {
              ORDER BY v.publishedAt DESC
             """)
     List<Video> findByChannelId(@Param("channelId") String channelId);
+
+    @Query("""
+             SELECT v
+             FROM Video v
+             WHERE v.channel.channelId = :channelId
+             ORDER BY v.viewCount DESC
+            """)
+    List<Video> findTop20ByChannelIdOrderByViewCountDesc(@Param("channelId") String channelId);
 }
 
