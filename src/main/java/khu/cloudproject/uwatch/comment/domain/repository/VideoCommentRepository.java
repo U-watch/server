@@ -35,4 +35,13 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
                 ORDER BY COUNT(vc) DESC
             """)
     List<Object[]> countComments(@Param("channelId") String channelId);
+
+    @Query("""
+             SELECT vc
+             FROM VideoComment vc
+             WHERE vc.video.channel.channelId = :channelId
+             AND vc.authorName = :authorName
+             ORDER BY vc.publishedAt DESC
+            """)
+    List<VideoComment> findByChannelIdAndAuthorName(@Param("channelId") String channelId, @Param("authorName") String authorName);
 }
