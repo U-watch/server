@@ -45,8 +45,11 @@ public class Channel {
     @Column(name = "view_count")
     private Long viewCount;
 
-    @Column(name = "total_views")
-    private Long totalViews;
+    @Column(name = "like_count")
+    private Long likeCount;
+
+    @Column(name = "wordcloud")
+    private String wordcloud;
 
     private String country;
 
