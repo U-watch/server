@@ -41,4 +41,13 @@ public class CommentApi {
         List<CommentResponseDTO.VideoCommentDetailResponseDTO> response = videoCommentService.getDetailedCommentsByKeyword(videoId, keyword);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
+
+    //TODO: 페이징 적용
+    @GetMapping("/{videoId}/all-comments")
+    @Operation(summary = "특정 비디오 전체 댓글 조회", description = "특정 비디오 ID의 전체 댓글을 조회합니다.")
+    public ResponseEntity<ApiResponse<List<CommentResponseDTO.VideoCommentDetailResponseDTO>>> getAllCommentsByVideoId(
+            @PathVariable String videoId) {
+        List<CommentResponseDTO.VideoCommentDetailResponseDTO> comments = videoCommentService.getAllCommentsByVideoId(videoId);
+        return ResponseEntity.ok(ApiResponse.of(comments));
+    }
 }

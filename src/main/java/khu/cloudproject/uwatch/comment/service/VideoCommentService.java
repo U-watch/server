@@ -42,4 +42,18 @@ public class VideoCommentService {
                         .build())
                 .toList();
     }
+
+    public List<CommentResponseDTO.VideoCommentDetailResponseDTO> getAllCommentsByVideoId(String videoId) {
+        List<VideoComment> comments = videoCommentRepository.findByVideoId(videoId);
+
+        return comments.stream()
+                .map(comment -> CommentResponseDTO.VideoCommentDetailResponseDTO.builder()
+                        .authorName(comment.getAuthorName())
+                        .authorProfileImage(comment.getAuthorProfileImageUrl())
+                        .commentText(comment.getCommentText())
+                        .publishedAt(comment.getPublishedAt())
+                        .likeCount(comment.getLikeCount())
+                        .build())
+                .collect(Collectors.toList());
+    }
 }

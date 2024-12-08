@@ -11,7 +11,10 @@ import khu.cloudproject.uwatch.video.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -25,14 +28,8 @@ public class VideoApi {
     private final VideoService videoService;
     private final KeywordService keywordService;
 
-    @GetMapping("/analysis/sentiment")
-    @Operation(summary = "비디오 댓글 감정 분석 수치 조회", description = "| Request: video_id | 기준으로 전체 댓글 수 대비 특정 감정의 댓글 비율을 반환합니다. |")
-    public ResponseEntity<ApiResponse<VideoResponseDTO.SentimentAnalysisResponse>> getSentimentAnalysis(@RequestParam String videoId) {
-        VideoResponseDTO.SentimentAnalysisResponse response = videoService.getSentimentAnalysis(videoId);
-        return ResponseEntity.ok(ApiResponse.of(response));
-    }
-
-    @GetMapping("/videos")
+    // TODO: 페이징 적용
+    @GetMapping("/all")
     @Operation(summary = "채널 비디오 목록 조회", description = "특정 채널의 비디오 목록을 조회합니다. \n\n [channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
     public ResponseEntity<ApiResponse<List<VideoResponseDTO.VideoSummaryResponse>>> getVideosByChannelId(
             @RequestParam String channelId) {
@@ -67,11 +64,25 @@ public class VideoApi {
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 
-    @GetMapping("/{videoId}/analysis")
+    @GetMapping("/analysis")
     @Operation(summary = "비디오 댓글 AI 분석 및 비율 분포도 조회(긍정 비율, 감정 분포, 카테고리 분포)",
             description = "특정 비디오 댓글의 긍정 비율, 감정 분포, 카테고리 분포를 반환합니다.")
-    public ResponseEntity<ApiResponse<VideoAnalysisResponseDTO>> getVideoAnalysis(@PathVariable String videoId) {
+    public ResponseEntity<ApiResponse<VideoAnalysisResponseDTO>> getVideoAnalysis(@RequestParam String videoId) {
         VideoAnalysisResponseDTO response = videoService.getVideoAnalysis(videoId);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
+
+    @GetMapping("/analysis/sentiment")
+    @Operation(summary = "비디오 댓글 감정 분석 수치 조회", description = "| Request: video_id | 기준으로 전체 댓글 수 대비 특정 감정의 댓글 비율을 반환합니다. |")
+    public ResponseEntity<ApiResponse<VideoResponseDTO.SentimentAnalysisResponse>> getSentimentAnalysis(@RequestParam String videoId) {
+        VideoResponseDTO.SentimentAnalysisResponse response = videoService.getSentimentAnalysis(videoId);
+        return ResponseEntity.ok(ApiResponse.of(response));
+    }
+
+//    @GetMapping("/analysis/category")
+//    @Operation(summary = "비디오 댓글 카테고리 분포 조회", description = "| Request: video_id | 기준으로 전체 댓글 수 대비 특정 카테고리의 댓글 비율을 반환합니다. |")
+//    public ResponseEntity<ApiResponse<VideoResponseDTO.CategoryAnalysisResponse>> getCategoryAnalysis(@RequestParam String videoId) {
+//        VideoResponseDTO.CategoryAnalysisResponse response = videoService.getCategoryAnalysis(videoId);
+//        return ResponseEntity.ok(ApiResponse.of(response));
+//    }
 }
