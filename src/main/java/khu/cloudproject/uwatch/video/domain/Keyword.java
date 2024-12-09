@@ -29,7 +29,7 @@ public class Keyword {
     private Long topkeyword3Count;
 
     @ManyToOne
-    @JoinColumn(name = "video_id")
+    @JoinColumn(name = "video_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Video video;
 
     // Getters, Setters, Constructors

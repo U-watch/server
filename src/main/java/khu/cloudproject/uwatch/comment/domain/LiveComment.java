@@ -31,7 +31,7 @@ public class LiveComment {
     private LocalDateTime publishedAt;
 
     @ManyToOne
-    @JoinColumn(name = "live_id")
+    @JoinColumn(name = "live_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Live live;
 
     // Getters, Setters, Constructors

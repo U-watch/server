@@ -46,7 +46,7 @@ public class Live {
     private Integer slander;
 
     @ManyToOne
-    @JoinColumn(name = "channel_id")
+    @JoinColumn(name = "channel_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Channel channel;
 
     @OneToMany(mappedBy = "live", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
