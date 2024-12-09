@@ -3,6 +3,7 @@ package khu.cloudproject.uwatch.video.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import khu.cloudproject.uwatch.global.response.ApiResponse;
+import khu.cloudproject.uwatch.video.controller.dto.CommentTrendIntervalResponseDTO;
 import khu.cloudproject.uwatch.video.controller.dto.KeywordResponseDTO;
 import khu.cloudproject.uwatch.video.controller.dto.VideoAnalysisResponseDTO;
 import khu.cloudproject.uwatch.video.controller.dto.VideoResponseDTO;
@@ -55,7 +56,14 @@ public class VideoApi {
 
     /*
         TODO: 댓글 추이 그래프를 생성할 때 어떤 값이 필요한지 프론트와 상의 후 댓글 추이 API 구현
+        -> 30분 간격 or 1시간 간격
      */
+    @GetMapping("/comments/trend/interval")
+    @Operation(summary = "댓글 추이 조회 API (30분 간격)", description = "특정 비디오의 댓글 추이를 30분 간격으로 조회합니다.")
+    public ResponseEntity<ApiResponse<List<CommentTrendIntervalResponseDTO>>> getCommentTrendsByInterval(@RequestParam String videoId) {
+        List<CommentTrendIntervalResponseDTO> response = videoService.getCommentTrendsBy30MinuteInterval(videoId);
+        return ResponseEntity.ok(ApiResponse.of(response));
+    }
 
     @GetMapping("/keywords")
     @Operation(summary = "가장 많이 언급된 키워드 조회", description = "특정 비디오에서 가장 많이 언급된 키워드를 조회합니다.")

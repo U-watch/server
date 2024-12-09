@@ -59,11 +59,11 @@ public class VideoComment {
     private BlockedStatus blockedStatus;
 
     @ManyToOne
-    @JoinColumn(name = "video_id")
+    @JoinColumn(name = "video_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Video video;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private Author author;
 
     // Getters, Setters, Constructors

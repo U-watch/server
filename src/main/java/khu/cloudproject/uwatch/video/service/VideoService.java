@@ -5,6 +5,7 @@ import khu.cloudproject.uwatch.global.enums.PositiveStatus;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
 import khu.cloudproject.uwatch.global.exception.CommonErrorCode;
 import khu.cloudproject.uwatch.global.exception.CustomException;
+import khu.cloudproject.uwatch.video.controller.dto.CommentTrendIntervalResponseDTO;
 import khu.cloudproject.uwatch.video.controller.dto.VideoAnalysisResponseDTO;
 import khu.cloudproject.uwatch.video.controller.dto.VideoResponseDTO;
 import khu.cloudproject.uwatch.video.domain.Video;
@@ -12,6 +13,8 @@ import khu.cloudproject.uwatch.video.domain.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,6 +140,24 @@ public class VideoService {
             distribution.put(key, (double) value / total * 100);
         }
         return distribution;
+    }
+
+    public List<CommentTrendIntervalResponseDTO> getCommentTrendsBy30MinuteInterval(String videoId) {
+        List<Object[]> results = videoCommentRepository.findCommentTrendsBy30MinuteInterval(videoId);
+
+        return results.stream()
+                .map(result -> {
+                    String intervalStart = result[0].toString();
+                    String intervalEnd = LocalDateTime.parse(intervalStart + ":00:00",
+                                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                            .plusMinutes(30)
+                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                    return CommentTrendIntervalResponseDTO.builder()
+                            .interval(intervalStart + " ~ " + intervalEnd)
+                            .commentCount((long) result[1])
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 }
 
