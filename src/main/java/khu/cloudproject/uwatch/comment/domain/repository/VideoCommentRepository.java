@@ -69,6 +69,14 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
             """)
     List<VideoComment> findByVideoId(@Param("videoId") String videoId);
 
+    @Query("""
+            SELECT vc 
+            FROM VideoComment vc 
+            JOIN FETCH vc.video 
+            WHERE vc.video.videoId = :videoId
+            AND vc.blockedStatus = khu.cloudproject.uwatch.global.enums.BlockedStatus.NOT_BLOCKED
+            """)
+    List<VideoComment> findByVideoIdAndNotBlocked(@Param("videoId") String videoId);
 
     @Query("""
             SELECT vc
@@ -77,6 +85,17 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
             AND vc.sentiment = :sentiment
             """)
     List<VideoComment> findByVideoIdAndSentiment(@Param("videoId") String videoId, @Param("sentiment") Sentiment sentiment);
+
+    @Query("""
+            SELECT vc
+            FROM VideoComment vc
+            WHERE vc.video.videoId = :videoId
+            AND vc.sentiment = :sentiment
+            AND vc.blockedStatus = khu.cloudproject.uwatch.global.enums.BlockedStatus.NOT_BLOCKED
+            """)
+    List<VideoComment> findByVideoIdAndSentimentAndNotBlocked(
+            @Param("videoId") String videoId,
+            @Param("sentiment") Sentiment sentiment);
 
     @Query("""
             SELECT vc

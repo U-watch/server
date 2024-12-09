@@ -48,7 +48,7 @@ public class VideoCommentService {
     }
 
     public List<CommentResponseDTO.VideoCommentDetailResponseDTO> getAllCommentsByVideoId(String videoId) {
-        List<VideoComment> comments = videoCommentRepository.findByVideoId(videoId);
+        List<VideoComment> comments = videoCommentRepository.findByVideoIdAndNotBlocked(videoId);
 
         if (comments.isEmpty()) {
             throw new CustomException(CommonErrorCode.NO_COMMENTS_FOUND);
@@ -71,9 +71,12 @@ public class VideoCommentService {
     }
 
     public List<CommentResponseDTO.VideoCommentDetailResponseDTO> getCommentsBySentiment(String videoId, Sentiment sentiment) {
-        List<VideoComment> comments = videoCommentRepository.findByVideoIdAndSentiment(videoId, sentiment);
+        List<VideoComment> comments = videoCommentRepository.findByVideoIdAndSentimentAndNotBlocked(videoId, sentiment);
 
-        // Map Entity to DTO
+        if (comments.isEmpty()) {
+            throw new CustomException(CommonErrorCode.NO_COMMENTS_FOUND);
+        }
+
         return comments.stream()
                 .map(comment -> CommentResponseDTO.VideoCommentDetailResponseDTO.builder()
                         .authorName(comment.getAuthorName())
@@ -84,7 +87,7 @@ public class VideoCommentService {
                         .build())
                 .toList();
     }
-
+    
     public List<CommentResponseDTO.VideoCommentDetailResponseDTO> getCommentsByCategory(String videoId, CommentCategory category) {
         List<VideoComment> comments = videoCommentRepository.findByVideoIdAndCategory(videoId, category);
 

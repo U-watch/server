@@ -56,7 +56,7 @@ public class VideoComment {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "blocked_status")
-    private BlockedStatus blockedStatus;
+    private BlockedStatus blockedStatus = BlockedStatus.NOT_BLOCKED;
 
     @ManyToOne
     @JoinColumn(name = "video_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
