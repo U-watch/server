@@ -45,6 +45,8 @@ public class VideoCommentService {
                         .commentText(comment.getCommentText())
                         .publishedAt(comment.getPublishedAt())
                         .likeCount(comment.getLikeCount())
+                        .category(comment.getCategory())
+                        .sentiment(comment.getSentiment())
                         .build())
                 .toList();
     }
@@ -68,6 +70,8 @@ public class VideoCommentService {
                                         comment.getVideo().getCommentDownloadUrl() :
                                         "No download available"
                         )
+                        .sentiment(comment.getSentiment())
+                        .category(comment.getCategory())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -86,6 +90,8 @@ public class VideoCommentService {
                         .commentText(comment.getCommentText())
                         .publishedAt(comment.getPublishedAt())
                         .likeCount(comment.getLikeCount())
+                        .sentiment(comment.getSentiment())
+                        .category(comment.getCategory())
                         .build())
                 .toList();
     }
@@ -104,6 +110,8 @@ public class VideoCommentService {
                         .commentText(comment.getCommentText())
                         .publishedAt(comment.getPublishedAt())
                         .likeCount(comment.getLikeCount())
+                        .sentiment(comment.getSentiment())
+                        .category(comment.getCategory())
                         .build())
                 .toList();
     }

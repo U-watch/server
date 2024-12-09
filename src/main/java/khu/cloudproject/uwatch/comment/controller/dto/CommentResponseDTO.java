@@ -1,5 +1,7 @@
 package khu.cloudproject.uwatch.comment.controller.dto;
 
+import khu.cloudproject.uwatch.global.enums.CommentCategory;
+import khu.cloudproject.uwatch.global.enums.Sentiment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,5 +32,7 @@ public class CommentResponseDTO {
         private LocalDateTime publishedAt;  // 댓글 작성 시간
         private Integer likeCount;          // 댓글 좋아요 수
         private String commentDownloadUrl;  // 댓글 다운로드 URL
+        private Sentiment sentiment;        // 댓글 감정
+        private CommentCategory category;   // 댓글 카테고리
     }
 }
