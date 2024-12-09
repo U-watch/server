@@ -50,7 +50,7 @@ public class CommentApi {
     }
 
     @GetMapping("/{videoId}/all")
-    @Operation(summary = "특정 비디오 전체 댓글 조회", description = "특정 비디오 ID의 전체 댓글을 조회합니다.")
+    @Operation(summary = "특정 비디오 전체 댓글 조회", description = "특정 비디오 ID의 전체 댓글을 조회합니다. 댓글 리스트 조회 API 중 전체 댓글 조회 API만 액셀 파일 다운로드 가능")
     public ResponseEntity<ApiResponse<List<CommentResponseDTO.VideoCommentDetailResponseDTO>>> getAllCommentsByVideoId(
             @PathVariable String videoId) {
         List<CommentResponseDTO.VideoCommentDetailResponseDTO> comments = videoCommentService.getAllCommentsByVideoId(videoId);

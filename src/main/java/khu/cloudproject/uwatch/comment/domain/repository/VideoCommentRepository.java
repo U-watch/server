@@ -61,8 +61,14 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
     @Query("SELECT vc.category, COUNT(vc) FROM VideoComment vc WHERE vc.video.videoId = :videoId GROUP BY vc.category")
     List<Object[]> countCategoriesByVideoId(@Param("videoId") String videoId);
 
-    @Query("SELECT vc FROM VideoComment vc WHERE vc.video.videoId = :videoId")
+    @Query("""
+            SELECT vc 
+            FROM VideoComment vc 
+            JOIN FETCH vc.video 
+            WHERE vc.video.videoId = :videoId
+            """)
     List<VideoComment> findByVideoId(@Param("videoId") String videoId);
+
 
     @Query("""
             SELECT vc

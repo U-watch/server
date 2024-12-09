@@ -25,7 +25,8 @@ public enum CommonErrorCode implements BaseErrorCode {
     CHANNEL_NOT_FOUND(HttpStatus.NOT_FOUND, "CHANNEL404", "해당 채널을 찾을 수 없습니다."),
     VIDEO_NOT_FOUND(HttpStatus.NOT_FOUND, "VIDEO404", "해당 비디오를 찾을 수 없습니다."),
     KEYWORD_NOT_FOUND(HttpStatus.NOT_FOUND, "KEYWORD404", "해당 키워드를 찾을 수 없습니다."),
-    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER404", "해당 회원을 찾을 수 없습니다.");
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER404", "해당 회원을 찾을 수 없습니다."),
+    NO_COMMENTS_FOUND(HttpStatus.NOT_FOUND, "COMMENT404", "해당 비디오의 댓글을 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

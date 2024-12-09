@@ -5,6 +5,8 @@ import khu.cloudproject.uwatch.comment.domain.VideoComment;
 import khu.cloudproject.uwatch.comment.domain.repository.VideoCommentRepository;
 import khu.cloudproject.uwatch.global.enums.CommentCategory;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
+import khu.cloudproject.uwatch.global.exception.CommonErrorCode;
+import khu.cloudproject.uwatch.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +50,10 @@ public class VideoCommentService {
     public List<CommentResponseDTO.VideoCommentDetailResponseDTO> getAllCommentsByVideoId(String videoId) {
         List<VideoComment> comments = videoCommentRepository.findByVideoId(videoId);
 
+        if (comments.isEmpty()) {
+            throw new CustomException(CommonErrorCode.NO_COMMENTS_FOUND);
+        }
+
         return comments.stream()
                 .map(comment -> CommentResponseDTO.VideoCommentDetailResponseDTO.builder()
                         .authorName(comment.getAuthorName())
@@ -55,6 +61,11 @@ public class VideoCommentService {
                         .commentText(comment.getCommentText())
                         .publishedAt(comment.getPublishedAt())
                         .likeCount(comment.getLikeCount())
+                        .commentDownloadUrl(
+                                comment.getVideo().getCommentDownloadUrl() != null ?
+                                        comment.getVideo().getCommentDownloadUrl() :
+                                        "No download available"
+                        )
                         .build())
                 .collect(Collectors.toList());
     }

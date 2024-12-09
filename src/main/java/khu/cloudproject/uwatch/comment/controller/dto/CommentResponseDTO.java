@@ -29,5 +29,6 @@ public class CommentResponseDTO {
         private String commentText;         // 댓글 내용
         private LocalDateTime publishedAt;  // 댓글 작성 시간
         private Integer likeCount;          // 댓글 좋아요 수
+        private String commentDownloadUrl;  // 댓글 다운로드 URL
     }
 }
