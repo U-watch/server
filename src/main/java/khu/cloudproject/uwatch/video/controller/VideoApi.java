@@ -135,27 +135,27 @@ public class VideoApi {
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 
-    @GetMapping("/analysis/sentiment")
-    @Operation(
-            summary = "비디오 댓글 감정 분석 수치 조회",
-            description = """
-                        [video_id]
-                        
-                        “슈카월드”
-                        - JdRcM4fLwgE
-                        - 5IWvoKOLX4Y
-                        - SWzyztkoagc
-
-                        “곽튜브”
-                        - RSv0K4hQyV8
-                        - 84zkJa9xIVA
-                        - 8_hpcebDNFw
-                    """
-    )
-    public ResponseEntity<ApiResponse<VideoResponseDTO.SentimentAnalysisResponse>> getSentimentAnalysis(@RequestParam String videoId) {
-        VideoResponseDTO.SentimentAnalysisResponse response = videoService.getSentimentAnalysis(videoId);
-        return ResponseEntity.ok(ApiResponse.of(response));
-    }
+//    @GetMapping("/analysis/sentiment")
+//    @Operation(
+//            summary = "비디오 댓글 감정 분석 수치 조회",
+//            description = """
+//                        [video_id]
+//
+//                        “슈카월드”
+//                        - JdRcM4fLwgE
+//                        - 5IWvoKOLX4Y
+//                        - SWzyztkoagc
+//
+//                        “곽튜브”
+//                        - RSv0K4hQyV8
+//                        - 84zkJa9xIVA
+//                        - 8_hpcebDNFw
+//                    """
+//    )
+//    public ResponseEntity<ApiResponse<VideoResponseDTO.SentimentAnalysisResponse>> getSentimentAnalysis(@RequestParam String videoId) {
+//        VideoResponseDTO.SentimentAnalysisResponse response = videoService.getSentimentAnalysis(videoId);
+//        return ResponseEntity.ok(ApiResponse.of(response));
+//    }
 
 //    @GetMapping("/analysis/category")
 //    @Operation(summary = "비디오 댓글 카테고리 분포 조회", description = "| Request: video_id | 기준으로 전체 댓글 수 대비 특정 카테고리의 댓글 비율을 반환합니다. |")

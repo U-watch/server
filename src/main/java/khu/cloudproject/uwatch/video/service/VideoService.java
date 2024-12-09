@@ -1,6 +1,7 @@
 package khu.cloudproject.uwatch.video.service;
 
 import khu.cloudproject.uwatch.comment.domain.repository.VideoCommentRepository;
+import khu.cloudproject.uwatch.global.enums.CommentCategory;
 import khu.cloudproject.uwatch.global.enums.PositiveStatus;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
 import khu.cloudproject.uwatch.global.exception.CommonErrorCode;
@@ -112,25 +113,24 @@ public class VideoService {
         if (totalComments == 0) {
             return VideoAnalysisResponseDTO.builder()
                     .positiveRate(0.0)
-                    .sentimentDistribution(new HashMap<>())
-                    .categoryDistribution(new HashMap<>())
+                    .sentimentDistribution(initializeDistribution(Sentiment.values()))
+                    .categoryDistribution(initializeDistribution(CommentCategory.values()))
                     .build();
         }
 
         // Positive Rate
         long positiveCount = videoCommentRepository.countByVideoIdAndPositiveStatus(videoId, PositiveStatus.POSITIVE);
         double positiveRate = (double) positiveCount / totalComments * 100;
-        
         DecimalFormat df = new DecimalFormat("#.0");
         positiveRate = Double.valueOf(df.format(positiveRate));
 
         // Sentiment Distribution
         List<Object[]> sentimentCounts = videoCommentRepository.countSentimentsByVideoId(videoId);
-        Map<String, Double> sentimentDistribution = calculateDistribution(sentimentCounts, totalComments);
+        Map<String, Double> sentimentDistribution = calculateDistribution(sentimentCounts, totalComments, Sentiment.values());
 
         // Category Distribution
         List<Object[]> categoryCounts = videoCommentRepository.countCategoriesByVideoId(videoId);
-        Map<String, Double> categoryDistribution = calculateDistribution(categoryCounts, totalComments);
+        Map<String, Double> categoryDistribution = calculateDistribution(categoryCounts, totalComments, CommentCategory.values());
 
         return VideoAnalysisResponseDTO.builder()
                 .positiveRate(positiveRate)
@@ -139,17 +139,26 @@ public class VideoService {
                 .build();
     }
 
-    private Map<String, Double> calculateDistribution(List<Object[]> counts, long total) {
-        Map<String, Double> distribution = new HashMap<>();
+
+    private Map<String, Double> calculateDistribution(List<Object[]> counts, long total, Enum<?>[] enumValues) {
+        Map<String, Double> distribution = initializeDistribution(enumValues);
         DecimalFormat df = new DecimalFormat("#.0"); // 소수점 한 자리까지만 포맷팅
 
         for (Object[] count : counts) {
-            if (count[0] != null && count[1] != null) { // Null 체크
+            if (count[0] != null && count[1] != null) {
                 String key = count[0].toString();
                 long value = ((Number) count[1]).longValue();
                 double percentage = (double) value / total * 100;
-                distribution.put(key, Double.valueOf(df.format(percentage))); // 포맷 적용
+                distribution.put(key, Double.valueOf(df.format(percentage)));
             }
+        }
+        return distribution;
+    }
+
+    private Map<String, Double> initializeDistribution(Enum<?>[] enumValues) {
+        Map<String, Double> distribution = new HashMap<>();
+        for (Enum<?> value : enumValues) {
+            distribution.put(value.name(), 0.0);
         }
         return distribution;
     }
