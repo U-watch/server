@@ -26,10 +26,12 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
     @Query("SELECT vc.sentiment, COUNT(vc) FROM VideoComment vc WHERE vc.video.videoId IN :videoIds GROUP BY vc.sentiment")
     List<Object[]> countSentimentsByVideoIds(@Param("videoIds") List<String> videoIds);
 
-    @Query("SELECT COUNT(vc) FROM VideoComment vc WHERE vc.video.videoId IN :videoIds AND vc.sentiment = :sentiment")
-    long countByVideoIdsAndSentiment(@Param("videoIds") List<String> videoIds, @Param("sentiment") Sentiment sentiment);
-
-    @Query("SELECT vc.sentiment, COUNT(vc) FROM VideoComment vc WHERE vc.video.videoId = :videoId GROUP BY vc.sentiment")
+    @Query("""
+                SELECT vc.sentiment, COUNT(vc)
+                FROM VideoComment vc
+                WHERE vc.video.videoId = :videoId
+                GROUP BY vc.sentiment
+            """)
     List<Object[]> countSentimentsByVideoId(@Param("videoId") String videoId);
 
     @Query("""
@@ -61,16 +63,13 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
     @Query("SELECT COUNT(vc) FROM VideoComment vc WHERE vc.video.videoId = :videoId AND vc.positiveStatus = :status")
     long countByVideoIdAndPositiveStatus(@Param("videoId") String videoId, @Param("status") PositiveStatus status);
 
-    @Query("SELECT vc.category, COUNT(vc) FROM VideoComment vc WHERE vc.video.videoId = :videoId GROUP BY vc.category")
-    List<Object[]> countCategoriesByVideoId(@Param("videoId") String videoId);
-
     @Query("""
-            SELECT vc 
-            FROM VideoComment vc 
-            JOIN FETCH vc.video 
-            WHERE vc.video.videoId = :videoId
+                SELECT vc.category, COUNT(vc)
+                FROM VideoComment vc
+                WHERE vc.video.videoId = :videoId
+                GROUP BY vc.category
             """)
-    List<VideoComment> findByVideoId(@Param("videoId") String videoId);
+    List<Object[]> countCategoriesByVideoId(@Param("videoId") String videoId);
 
     @Query("""
             SELECT vc 
@@ -86,27 +85,11 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
             FROM VideoComment vc
             WHERE vc.video.videoId = :videoId
             AND vc.sentiment = :sentiment
-            """)
-    List<VideoComment> findByVideoIdAndSentiment(@Param("videoId") String videoId, @Param("sentiment") Sentiment sentiment);
-
-    @Query("""
-            SELECT vc
-            FROM VideoComment vc
-            WHERE vc.video.videoId = :videoId
-            AND vc.sentiment = :sentiment
             AND vc.blockedStatus = khu.cloudproject.uwatch.global.enums.BlockedStatus.NOT_BLOCKED
             """)
     List<VideoComment> findByVideoIdAndSentimentAndNotBlocked(
             @Param("videoId") String videoId,
             @Param("sentiment") Sentiment sentiment);
-
-    @Query("""
-            SELECT vc
-            FROM VideoComment vc
-            WHERE vc.video.videoId = :videoId
-            AND vc.category = :category
-            """)
-    List<VideoComment> findByVideoIdAndCategory(String videoId, CommentCategory category);
 
     @Query("""
             SELECT 

@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -119,14 +120,17 @@ public class VideoService {
         // Positive Rate
         long positiveCount = videoCommentRepository.countByVideoIdAndPositiveStatus(videoId, PositiveStatus.POSITIVE);
         double positiveRate = (double) positiveCount / totalComments * 100;
+        
+        DecimalFormat df = new DecimalFormat("#.0");
+        positiveRate = Double.valueOf(df.format(positiveRate));
 
         // Sentiment Distribution
-        Map<String, Double> sentimentDistribution = calculateDistribution(
-                videoCommentRepository.countSentimentsByVideoId(videoId), totalComments);
+        List<Object[]> sentimentCounts = videoCommentRepository.countSentimentsByVideoId(videoId);
+        Map<String, Double> sentimentDistribution = calculateDistribution(sentimentCounts, totalComments);
 
         // Category Distribution
-        Map<String, Double> categoryDistribution = calculateDistribution(
-                videoCommentRepository.countCategoriesByVideoId(videoId), totalComments);
+        List<Object[]> categoryCounts = videoCommentRepository.countCategoriesByVideoId(videoId);
+        Map<String, Double> categoryDistribution = calculateDistribution(categoryCounts, totalComments);
 
         return VideoAnalysisResponseDTO.builder()
                 .positiveRate(positiveRate)
@@ -137,10 +141,15 @@ public class VideoService {
 
     private Map<String, Double> calculateDistribution(List<Object[]> counts, long total) {
         Map<String, Double> distribution = new HashMap<>();
+        DecimalFormat df = new DecimalFormat("#.0"); // 소수점 한 자리까지만 포맷팅
+
         for (Object[] count : counts) {
-            String key = count[0].toString();
-            long value = (long) count[1];
-            distribution.put(key, (double) value / total * 100);
+            if (count[0] != null && count[1] != null) { // Null 체크
+                String key = count[0].toString();
+                long value = ((Number) count[1]).longValue();
+                double percentage = (double) value / total * 100;
+                distribution.put(key, Double.valueOf(df.format(percentage))); // 포맷 적용
+            }
         }
         return distribution;
     }

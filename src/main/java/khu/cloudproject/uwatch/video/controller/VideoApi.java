@@ -47,7 +47,22 @@ public class VideoApi {
     }
 
     @GetMapping("/info")
-    @Operation(summary = "비디오 세부 정보 조회", description = "특정 비디오의 세부 정보(총댓글, 전체 조회수, 워드클라우드 url 등)를 조회합니다.")
+    @Operation(
+            summary = "비디오 세부 정보 조회",
+            description = """
+                        [video_id]
+                        
+                        “슈카월드”
+                        - JdRcM4fLwgE
+                        - 5IWvoKOLX4Y
+                        - SWzyztkoagc
+
+                        “곽튜브”
+                        - RSv0K4hQyV8
+                        - 84zkJa9xIVA
+                        - 8_hpcebDNFw
+                    """
+    )
     public ResponseEntity<ApiResponse<VideoResponseDTO.VideoDetailsResponse>> getVideoDetails(
             @RequestParam String videoId) {
         VideoResponseDTO.VideoDetailsResponse response = videoService.getVideoDetails(videoId);
@@ -55,29 +70,88 @@ public class VideoApi {
     }
 
     @GetMapping("/comments/trend/interval")
-    @Operation(summary = "댓글 추이 조회 API (30분 간격)", description = "특정 비디오의 댓글 추이를 30분 간격으로 조회합니다.")
+    @Operation(
+            summary = "댓글 추이 조회(30분 간격)",
+            description = """
+                        [video_id]
+                        
+                        “슈카월드”
+                        - JdRcM4fLwgE
+                        - 5IWvoKOLX4Y
+                        - SWzyztkoagc
+
+                        “곽튜브”
+                        - RSv0K4hQyV8
+                        - 84zkJa9xIVA
+                        - 8_hpcebDNFw
+                    """
+    )
     public ResponseEntity<ApiResponse<List<CommentTrendIntervalResponseDTO>>> getCommentTrendsByInterval(@RequestParam String videoId) {
         List<CommentTrendIntervalResponseDTO> response = videoService.getCommentTrendsBy30MinuteInterval(videoId);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 
     @GetMapping("/keywords")
-    @Operation(summary = "가장 많이 언급된 키워드 조회", description = "특정 비디오에서 가장 많이 언급된 키워드를 조회합니다.")
+    @Operation(
+            summary = "가장 많이 언급된 키워드 조회",
+            description = """
+                        [video_id]
+                        
+                        “슈카월드”
+                        - JdRcM4fLwgE
+                        - 5IWvoKOLX4Y
+                        - SWzyztkoagc
+
+                        “곽튜브”
+                        - RSv0K4hQyV8
+                        - 84zkJa9xIVA
+                        - 8_hpcebDNFw
+                    """
+    )
     public ResponseEntity<ApiResponse<KeywordResponseDTO>> getTopKeywords(@RequestParam String videoId) {
         KeywordResponseDTO response = keywordService.getTopKeywords(videoId);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 
     @GetMapping("/analysis")
-    @Operation(summary = "비디오 댓글 AI 분석 및 비율 분포도 조회(긍정 비율, 감정 분포, 카테고리 분포)",
-            description = "특정 비디오 댓글의 긍정 비율, 감정 분포, 카테고리 분포를 반환합니다.")
+    @Operation(
+            summary = "비디오 댓글 AI 분석 및 비율 분포도 조회(긍정 비율, 감정 분포, 카테고리 분포)",
+            description = """
+                        [video_id]
+                        
+                        “슈카월드”
+                        - JdRcM4fLwgE
+                        - 5IWvoKOLX4Y
+                        - SWzyztkoagc
+
+                        “곽튜브”
+                        - RSv0K4hQyV8
+                        - 84zkJa9xIVA
+                        - 8_hpcebDNFw
+                    """
+    )
     public ResponseEntity<ApiResponse<VideoAnalysisResponseDTO>> getVideoAnalysis(@RequestParam String videoId) {
         VideoAnalysisResponseDTO response = videoService.getVideoAnalysis(videoId);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 
     @GetMapping("/analysis/sentiment")
-    @Operation(summary = "비디오 댓글 감정 분석 수치 조회", description = "| Request: video_id | 기준으로 전체 댓글 수 대비 특정 감정의 댓글 비율을 반환합니다. |")
+    @Operation(
+            summary = "비디오 댓글 감정 분석 수치 조회",
+            description = """
+                        [video_id]
+                        
+                        “슈카월드”
+                        - JdRcM4fLwgE
+                        - 5IWvoKOLX4Y
+                        - SWzyztkoagc
+
+                        “곽튜브”
+                        - RSv0K4hQyV8
+                        - 84zkJa9xIVA
+                        - 8_hpcebDNFw
+                    """
+    )
     public ResponseEntity<ApiResponse<VideoResponseDTO.SentimentAnalysisResponse>> getSentimentAnalysis(@RequestParam String videoId) {
         VideoResponseDTO.SentimentAnalysisResponse response = videoService.getSentimentAnalysis(videoId);
         return ResponseEntity.ok(ApiResponse.of(response));
