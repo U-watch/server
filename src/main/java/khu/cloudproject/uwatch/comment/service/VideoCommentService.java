@@ -1,8 +1,10 @@
 package khu.cloudproject.uwatch.comment.service;
 
+import jakarta.transaction.Transactional;
 import khu.cloudproject.uwatch.comment.controller.dto.CommentResponseDTO;
 import khu.cloudproject.uwatch.comment.domain.VideoComment;
 import khu.cloudproject.uwatch.comment.domain.repository.VideoCommentRepository;
+import khu.cloudproject.uwatch.global.enums.BlockedStatus;
 import khu.cloudproject.uwatch.global.enums.CommentCategory;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
 import khu.cloudproject.uwatch.global.exception.CommonErrorCode;
@@ -87,11 +89,14 @@ public class VideoCommentService {
                         .build())
                 .toList();
     }
-    
-    public List<CommentResponseDTO.VideoCommentDetailResponseDTO> getCommentsByCategory(String videoId, CommentCategory category) {
-        List<VideoComment> comments = videoCommentRepository.findByVideoIdAndCategory(videoId, category);
 
-        // Map Entity to DTO
+    public List<CommentResponseDTO.VideoCommentDetailResponseDTO> getCommentsByCategory(String videoId, CommentCategory category) {
+        List<VideoComment> comments = videoCommentRepository.findByVideoIdAndCategoryAndNotBlocked(videoId, category);
+
+        if (comments.isEmpty()) {
+            throw new CustomException(CommonErrorCode.NO_COMMENTS_FOUND);
+        }
+
         return comments.stream()
                 .map(comment -> CommentResponseDTO.VideoCommentDetailResponseDTO.builder()
                         .authorName(comment.getAuthorName())
@@ -101,5 +106,14 @@ public class VideoCommentService {
                         .likeCount(comment.getLikeCount())
                         .build())
                 .toList();
+    }
+
+    @Transactional
+    public void blockCommentsByAuthor(String authorId) {
+        int updatedCount = videoCommentRepository.updateBlockedStatusByAuthorId(authorId, BlockedStatus.BLOCKED);
+
+        if (updatedCount == 0) {
+            throw new CustomException(CommonErrorCode.NO_COMMENTS_FOUND);
+        }
     }
 }

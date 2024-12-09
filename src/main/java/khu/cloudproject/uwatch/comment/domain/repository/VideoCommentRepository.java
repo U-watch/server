@@ -1,10 +1,13 @@
 package khu.cloudproject.uwatch.comment.domain.repository;
 
+import jakarta.transaction.Transactional;
 import khu.cloudproject.uwatch.comment.domain.VideoComment;
+import khu.cloudproject.uwatch.global.enums.BlockedStatus;
 import khu.cloudproject.uwatch.global.enums.CommentCategory;
 import khu.cloudproject.uwatch.global.enums.PositiveStatus;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -116,4 +119,24 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
             ORDER BY intervalStart ASC
             """)
     List<Object[]> findCommentTrendsBy30MinuteInterval(@Param("videoId") String videoId);
+
+    @Query("""
+            SELECT vc
+            FROM VideoComment vc
+            WHERE vc.video.videoId = :videoId
+            AND vc.category = :category
+            AND vc.blockedStatus = khu.cloudproject.uwatch.global.enums.BlockedStatus.NOT_BLOCKED
+            """)
+    List<VideoComment> findByVideoIdAndCategoryAndNotBlocked(
+            @Param("videoId") String videoId,
+            @Param("category") CommentCategory category);
+
+    @Modifying
+    @Transactional
+    @Query("""
+            UPDATE VideoComment vc
+            SET vc.blockedStatus = :blockedStatus
+            WHERE vc.author.authorId = :authorId
+            """)
+    int updateBlockedStatusByAuthorId(@Param("authorId") String authorId, @Param("blockedStatus") BlockedStatus blockedStatus);
 }

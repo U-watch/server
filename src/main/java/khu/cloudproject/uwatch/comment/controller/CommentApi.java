@@ -11,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -75,5 +72,11 @@ public class CommentApi {
         return ResponseEntity.ok(ApiResponse.of(comments));
     }
 
-    //TODO: 댓글 차단기능 -> 차단된 댓글은 조회되지 않도록 처리
+    @PostMapping("/block")
+    @Operation(summary = "댓글 차단", description = "| Request: author_id | 특정 author_id의 댓글을 BLOCKED 상태로 변경합니다. |")
+    public ResponseEntity<ApiResponse<String>> blockCommentsByAuthor(
+            @RequestParam String authorId) {
+        videoCommentService.blockCommentsByAuthor(authorId);
+        return ResponseEntity.ok(ApiResponse.of("해당 작성자의 댓글이 차단되었습니다."));
+    }
 }
