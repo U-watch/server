@@ -31,7 +31,7 @@ public class VideoApi {
 
     // TODO: 페이징 적용
     @GetMapping("/all")
-    @Operation(summary = "채널 비디오 목록 조회", description = "특정 채널의 비디오 목록을 조회합니다. \n\n [channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
+    @Operation(summary = "채널 전체 비디오 목록 조회", description = "특정 채널의 비디오 목록을 조회합니다. \n\n [channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
     public ResponseEntity<ApiResponse<List<VideoResponseDTO.VideoSummaryResponse>>> getVideosByChannelId(
             @RequestParam String channelId) {
         List<VideoResponseDTO.VideoSummaryResponse> response = videoService.getVideosByChannelId(channelId);
@@ -39,7 +39,7 @@ public class VideoApi {
     }
 
     @GetMapping("/top-videos")
-    @Operation(summary = "채널 상위 비디오 조회", description = "조회수를 기준으로 상위 20개의 비디오를 조회합니다. \n\n [channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
+    @Operation(summary = "채널 조회순 상위 10개 비디오 조회", description = "조회수를 기준으로 상위 10개의 비디오를 조회합니다. \n\n [channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
     public ResponseEntity<ApiResponse<List<VideoResponseDTO.VideoSummaryResponse>>> getTopVideosByViewCount(
             @RequestParam String channelId) {
         List<VideoResponseDTO.VideoSummaryResponse> response = videoService.getTopVideosByViewCount(channelId);
@@ -54,10 +54,6 @@ public class VideoApi {
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 
-    /*
-        TODO: 댓글 추이 그래프를 생성할 때 어떤 값이 필요한지 프론트와 상의 후 댓글 추이 API 구현
-        -> 30분 간격 or 1시간 간격
-     */
     @GetMapping("/comments/trend/interval")
     @Operation(summary = "댓글 추이 조회 API (30분 간격)", description = "특정 비디오의 댓글 추이를 30분 간격으로 조회합니다.")
     public ResponseEntity<ApiResponse<List<CommentTrendIntervalResponseDTO>>> getCommentTrendsByInterval(@RequestParam String videoId) {

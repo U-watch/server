@@ -11,6 +11,9 @@ import khu.cloudproject.uwatch.video.controller.dto.VideoResponseDTO;
 import khu.cloudproject.uwatch.video.domain.Video;
 import khu.cloudproject.uwatch.video.domain.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -70,9 +73,9 @@ public class VideoService {
     }
 
     public List<VideoResponseDTO.VideoSummaryResponse> getTopVideosByViewCount(String channelId) {
-        List<Video> videos = videoRepository.findTop20ByChannelIdOrderByViewCountDesc(channelId);
+        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "viewCount"));
+        List<Video> videos = videoRepository.findTopVideosByChannelId(channelId, pageable).getContent();
 
-        // DTO로 변환
         return videos.stream()
                 .map(video -> VideoResponseDTO.VideoSummaryResponse.builder()
                         .videoId(video.getVideoId())

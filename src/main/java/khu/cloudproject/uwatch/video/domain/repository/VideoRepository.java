@@ -1,6 +1,8 @@
 package khu.cloudproject.uwatch.video.domain.repository;
 
 import khu.cloudproject.uwatch.video.domain.Video;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,11 +25,12 @@ public interface VideoRepository extends JpaRepository<Video, String> {
     List<Video> findByChannelId(@Param("channelId") String channelId);
 
     @Query("""
-             SELECT v
-             FROM Video v
-             WHERE v.channel.channelId = :channelId
-             ORDER BY v.viewCount DESC
+
+                SELECT v
+            FROM Video v
+            WHERE v.channel.channelId = :channelId
+            ORDER BY v.viewCount DESC
             """)
-    List<Video> findTop20ByChannelIdOrderByViewCountDesc(@Param("channelId") String channelId);
+    Page<Video> findTopVideosByChannelId(@Param("channelId") String channelId, Pageable pageable);
 }
 
