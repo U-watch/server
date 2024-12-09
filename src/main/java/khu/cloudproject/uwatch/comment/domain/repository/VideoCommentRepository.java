@@ -94,7 +94,7 @@ public interface VideoCommentRepository extends JpaRepository<VideoComment, Long
     @Query("""
             SELECT 
                 CONCAT(DATE_FORMAT(vc.publishedAt, '%Y-%m-%d %H:'), 
-                       CASE WHEN MINUTE(vc.publishedAt) < 30 THEN '00' ELSE '30' END) AS intervalStart,
+                       CASE WHEN MINUTE(vc.publishedAt) < 30 THEN '00:00' ELSE '30:00' END) AS intervalStart,
                 COUNT(vc) AS commentCount
             FROM VideoComment vc
             WHERE vc.video.videoId = :videoId

@@ -86,8 +86,8 @@ public class VideoApi {
                         - 8_hpcebDNFw
                     """
     )
-    public ResponseEntity<ApiResponse<List<CommentTrendIntervalResponseDTO>>> getCommentTrendsByInterval(@RequestParam String videoId) {
-        List<CommentTrendIntervalResponseDTO> response = videoService.getCommentTrendsBy30MinuteInterval(videoId);
+    public ResponseEntity<ApiResponse<CommentTrendIntervalResponseDTO>> getCommentTrendsByInterval(@RequestParam String videoId) {
+        CommentTrendIntervalResponseDTO response = videoService.getCommentTrendsBy30MinuteInterval(videoId);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 

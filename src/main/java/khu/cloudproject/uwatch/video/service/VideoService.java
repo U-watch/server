@@ -18,8 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -163,22 +162,27 @@ public class VideoService {
         return distribution;
     }
 
-    public List<CommentTrendIntervalResponseDTO> getCommentTrendsBy30MinuteInterval(String videoId) {
+    public CommentTrendIntervalResponseDTO getCommentTrendsBy30MinuteInterval(String videoId) {
         List<Object[]> results = videoCommentRepository.findCommentTrendsBy30MinuteInterval(videoId);
 
-        return results.stream()
-                .map(result -> {
-                    String intervalStart = result[0].toString();
-                    String intervalEnd = LocalDateTime.parse(intervalStart + ":00:00",
-                                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                            .plusMinutes(30)
-                            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-                    return CommentTrendIntervalResponseDTO.builder()
-                            .interval(intervalStart + " ~ " + intervalEnd)
-                            .commentCount((long) result[1])
-                            .build();
-                })
-                .collect(Collectors.toList());
+        List<Long> cumulativeCommentCounts = new ArrayList<>();
+        long cumulativeCount = 0; // 누적 댓글 수
+
+        for (Object[] result : results) {
+            long count = ((Number) result[1]).longValue();
+            cumulativeCount += count;
+            cumulativeCommentCounts.add(cumulativeCount);
+        }
+
+        // 가장 처음 interval 시작 시간 계산
+        String startedAt = results.isEmpty() ? null : results.get(0)[0].toString();
+
+        return CommentTrendIntervalResponseDTO.builder()
+                .interval(30) // 30분 간격
+                .startedAt(startedAt)
+                .commentCount(cumulativeCommentCounts)
+                .build();
     }
+
 }
 
