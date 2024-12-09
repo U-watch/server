@@ -7,6 +7,8 @@ import khu.cloudproject.uwatch.comment.domain.repository.VideoCommentRepository;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
 import khu.cloudproject.uwatch.global.exception.CommonErrorCode;
 import khu.cloudproject.uwatch.global.exception.CustomException;
+import khu.cloudproject.uwatch.member.domain.Member;
+import khu.cloudproject.uwatch.member.domain.repository.MemberRepository;
 import khu.cloudproject.uwatch.video.domain.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,10 +24,16 @@ public class ChannelService {
     private final ChannelRepository channelRepository;
     private final VideoRepository videoRepository;
     private final VideoCommentRepository videoCommentRepository;
+    private final MemberRepository memberRepository;
 
-    public ChannelResponseDTO.ChannelProfileResponse getChannelInfo(String channelId) {
-        Channel channel = channelRepository.findByChannelId(channelId)
-                .orElseThrow(() -> new CustomException(CommonErrorCode.CHANNEL_NOT_FOUND));
+    public ChannelResponseDTO.ChannelProfileResponse getChannelInfoByMemberId(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new CustomException(CommonErrorCode.MEMBER_NOT_FOUND));
+
+        Channel channel = member.getChannel();
+        if (channel == null) {
+            throw new CustomException(CommonErrorCode.CHANNEL_NOT_FOUND);
+        }
 
         return ChannelResponseDTO.ChannelProfileResponse.builder()
                 .channelId(channel.getChannelId())

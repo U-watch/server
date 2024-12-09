@@ -25,9 +25,11 @@ public class ChannelApi {
     private final ChannelService channelService;
 
     @GetMapping("/info")
-    @Operation(summary = "온보딩 페이지용 채널 간단 조회", description = "[channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
-    public ResponseEntity<ApiResponse<ChannelResponseDTO.ChannelProfileResponse>> getChannelInfo(@RequestParam String channelId) {
-        ChannelResponseDTO.ChannelProfileResponse response = channelService.getChannelInfo(channelId);
+    @Operation(summary = "온보딩 페이지용 채널 간단 조회", description = "[member_id] 멤버 ID를 기반으로 채널 정보를 조회합니다."
+            + "\n\n 슈카월드: 1 \n\n 곽튜브: 2")
+    public ResponseEntity<ApiResponse<ChannelResponseDTO.ChannelProfileResponse>> getChannelInfoByMemberId(
+            @RequestParam Long memberId) {
+        ChannelResponseDTO.ChannelProfileResponse response = channelService.getChannelInfoByMemberId(memberId);
         return ResponseEntity.ok(ApiResponse.of(response));
     }
 
