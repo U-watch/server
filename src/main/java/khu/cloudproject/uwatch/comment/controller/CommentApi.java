@@ -27,8 +27,8 @@ public class CommentApi {
 
     //TODO: 댓글 관련 리스트 조회 API -> 페이징 적용
 
-    @GetMapping("/{channelId}/by-author?authorName={authorName}")
-    @Operation(summary = "특정 열혈 구독자의 댓글 목록 조회", description = "채널 ID와 authorName을 기반으로 해당 작성자가 작성한 댓글을 조회합니다.")
+    @GetMapping("/{channelId}/by-author/{authorName}")
+    @Operation(summary = "특정 열혈 구독자의 댓글 목록 조회", description = "[channel_id] \n\n 슈카월드: UCsJ6RuBiTVWRX156FVbeaGg \n\n 곽튜브: UClRNDVO8093rmRTtLe4GEPw")
     public ResponseEntity<ApiResponse<List<CommentResponseDTO.VideoCommentResponseDTO>>> getCommentsByAuthor(
             @PathVariable String channelId,
             @PathVariable String authorName) {
