@@ -1,4 +1,4 @@
-package khu.cloudproject.uwatch.member.controller.dto;
+package khu.cloudproject.uwatch.member2.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

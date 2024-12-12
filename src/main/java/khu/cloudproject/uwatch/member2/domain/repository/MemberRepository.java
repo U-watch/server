@@ -1,6 +1,6 @@
-package khu.cloudproject.uwatch.member.domain.repository;
+package khu.cloudproject.uwatch.member2.domain.repository;
 
-import khu.cloudproject.uwatch.member.domain.Member;
+import khu.cloudproject.uwatch.member2.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

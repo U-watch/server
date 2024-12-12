@@ -7,8 +7,8 @@ import khu.cloudproject.uwatch.comment.domain.repository.VideoCommentRepository;
 import khu.cloudproject.uwatch.global.enums.Sentiment;
 import khu.cloudproject.uwatch.global.exception.CommonErrorCode;
 import khu.cloudproject.uwatch.global.exception.CustomException;
-import khu.cloudproject.uwatch.member.domain.Member;
-import khu.cloudproject.uwatch.member.domain.repository.MemberRepository;
+import khu.cloudproject.uwatch.member2.domain.Member;
+import khu.cloudproject.uwatch.member2.domain.repository.MemberRepository;
 import khu.cloudproject.uwatch.video.domain.repository.VideoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -93,7 +93,7 @@ public class ChannelService {
                 .map(row -> ChannelResponseDTO.SuperFanResponse.builder()
                         .authorName((String) row[0]) // authorName
                         .authorProfileImageUrl((String) row[1]) // authorProfileImageUrl
-                        .commentCount((Long) row[2]) // commentCount
+                        .commentCount((Long) row[2] * 7) // commentCount
                         .build())
                 .collect(Collectors.toList());
     }

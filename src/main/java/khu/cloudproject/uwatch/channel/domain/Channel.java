@@ -2,7 +2,7 @@ package khu.cloudproject.uwatch.channel.domain;
 
 import jakarta.persistence.*;
 import khu.cloudproject.uwatch.live.domain.Live;
-import khu.cloudproject.uwatch.member.domain.Member;
+import khu.cloudproject.uwatch.member2.domain.Member;
 import khu.cloudproject.uwatch.video.domain.Video;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

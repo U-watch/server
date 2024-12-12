@@ -1,10 +1,10 @@
-package khu.cloudproject.uwatch.member.controller;
+package khu.cloudproject.uwatch.member2.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import khu.cloudproject.uwatch.global.response.ApiResponse;
-import khu.cloudproject.uwatch.member.controller.dto.MemberResponseDTO;
-import khu.cloudproject.uwatch.member.service.MemberService;
+import khu.cloudproject.uwatch.member2.controller.dto.MemberResponseDTO;
+import khu.cloudproject.uwatch.member2.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

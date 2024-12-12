@@ -1,10 +1,10 @@
-package khu.cloudproject.uwatch.member.service;
+package khu.cloudproject.uwatch.member2.service;
 
 import khu.cloudproject.uwatch.global.exception.CommonErrorCode;
 import khu.cloudproject.uwatch.global.exception.CustomException;
-import khu.cloudproject.uwatch.member.controller.dto.MemberResponseDTO;
-import khu.cloudproject.uwatch.member.domain.Member;
-import khu.cloudproject.uwatch.member.domain.repository.MemberRepository;
+import khu.cloudproject.uwatch.member2.controller.dto.MemberResponseDTO;
+import khu.cloudproject.uwatch.member2.domain.Member;
+import khu.cloudproject.uwatch.member2.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

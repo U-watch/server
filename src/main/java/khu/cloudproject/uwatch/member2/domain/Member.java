@@ -1,4 +1,4 @@
-package khu.cloudproject.uwatch.member.domain;
+package khu.cloudproject.uwatch.member2.domain;
 
 import jakarta.persistence.*;
 import khu.cloudproject.uwatch.channel.domain.Channel;
